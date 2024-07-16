@@ -5,27 +5,18 @@ import subprocess
 import pyautogui
 import os
 
-
-# Initialize speech recognition
 r = sr.Recognizer()
 
-# Initialize text-to-speech
+# To convert text-to-speech
 engine = pyttsx3.init()
 
-# Set voice and rate
+# Set voice and rate of speech of Chatbot
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
 engine.setProperty('rate', 150)
 
-# Define a function to handle user commands
 def handle_command(command):
-    # Convert command to lowercase
     command = command.lower()
-    
-
-
-
-    # Handle basic commands
     if 'press start button' in command:
         engine.say('Start button pressed')
         pyautogui.press('alt'+'f4')
@@ -36,14 +27,11 @@ def handle_command(command):
         engine.say(f'Opening {application}')
         engine.runAndWait()
         try:
-            # Map common application names to their executable paths
             app_paths = {
                 "notepad": "notepad.exe",
                 "calculator": "calc.exe",
                 "camera": "camera.exe",
-
-                                
-                # Add more applications as needed
+                # we can add more applications according to need
             }
             if application in app_paths:
                 subprocess.Popen(app_paths[application])
@@ -74,18 +62,16 @@ def handle_command(command):
         engine.runAndWait()
     elif 'increase volume' in command:
         engine.say('Increasing volume')
-        # Placeholder for volume increase code, platform-specific
-        os.system("nircmd.exe changesysvolume 2000")  # Example for Windows
+        os.system("nircmd.exe changesysvolume 2000")  
         engine.runAndWait()
     elif 'close tabs' in command:
         engine.say('Closing tabs')
-        pyautogui.hotkey('ctrl', 'w')  # Assuming this is for closing browser tabs
+        pyautogui.hotkey('ctrl', 'w')  
         engine.runAndWait()
     else:
         engine.say('Sorry, I did not understand that command')
         engine.runAndWait()
 
-# Define a function to listen for user commands
 def listen_for_command():
     with sr.Microphone() as source:
         print('Listening...')
@@ -103,8 +89,6 @@ def listen_for_command():
             engine.say(f'Error: {e}')
             engine.runAndWait()
     return ''
-
-# Main loop
 if __name__ == '__main__':
     
     while True:
